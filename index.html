@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Maxime ROMBOUTS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: #1a1a1a;
+            color: #6dd16d;
+            overflow-x: hidden;
+            cursor: crosshair;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(0deg,
+                    rgba(0, 0, 0, 0.15) 0px,
+                    rgba(0, 0, 0, 0.15) 1px,
+                    transparent 1px,
+                    transparent 2px);
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='6.5' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 999;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            background: rgba(0, 0, 0, 0.8);
+            border: 3px solid #4a4a4a;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.9), inset 0 0 30px rgba(0, 0, 0, 0.5);
+            position: relative;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: -3px;
+            left: -3px;
+            right: -3px;
+            bottom: -3px;
+            background: linear-gradient(45deg, #2a2a2a 0%, #1a1a1a 100%);
+            z-index: -1;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            text-shadow: 0 0 10px #6dd16d, 0 0 20px #4a4a4a;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+            animation: flicker 3s infinite;
+        }
+
+        @keyframes flicker {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.95;
+            }
+
+            51% {
+                opacity: 1;
+            }
+
+            52% {
+                opacity: 0.97;
+            }
+        }
+
+        .subtitle {
+            color: #8fbc8f;
+            font-size: 1.2em;
+            text-transform: uppercase;
+        }
+
+        nav {
+            background: rgba(0, 0, 0, 0.9);
+            border: 2px solid #3a3a3a;
+            padding: 15px;
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            background: linear-gradient(180deg, #2a4a2a 0%, #1a3a1a 100%);
+            border: 2px solid #4a6a4a;
+            color: #6dd16d;
+            padding: 12px 25px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            font-size: 1em;
+            text-transform: uppercase;
+            transition: all 0.2s;
+            position: relative;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .nav-btn:hover {
+            background: linear-gradient(180deg, #3a5a3a 0%, #2a4a2a 100%);
+            border-color: #6dd16d;
+            box-shadow: 0 0 15px rgba(109, 209, 109, 0.5), inset 0 0 10px rgba(0, 0, 0, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .nav-btn.active {
+            background: linear-gradient(180deg, #3a5a3a 0%, #2a4a2a 100%);
+            border-color: #6dd16d;
+            box-shadow: 0 0 20px rgba(109, 209, 109, 0.7);
+        }
+
+        section {
+            background: rgba(0, 0, 0, 0.85);
+            border: 3px solid #3a3a3a;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.8), inset 0 0 50px rgba(0, 0, 0, 0.3);
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+
+        section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h2 {
+            color: #6dd16d;
+            font-size: 2em;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px #4a4a4a;
+            border-bottom: 2px solid #3a3a3a;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            color: #8fbc8f;
+            font-size: 1.5em;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            line-height: 1.8;
+            margin-bottom: 15px;
+            color: #9dd19d;
+        }
+
+        .skills-list {
+            display: grid;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .skill-item {
+            background: rgba(0, 0, 0, 0.6);
+            border: 2px solid #3a3a3a;
+            padding: 15px;
+        }
+
+        .skill-name {
+            color: #6dd16d;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+        }
+
+        .skill-bar {
+            background: #1a1a1a;
+            height: 20px;
+            border: 2px solid #2a2a2a;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-fill {
+            background: linear-gradient(90deg, #2a4a2a 0%, #4a6a4a 100%);
+            height: 100%;
+            transition: width 1s ease-out;
+            box-shadow: 0 0 10px rgba(109, 209, 109, 0.5);
+            position: relative;
+        }
+
+        .skill-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(90deg,
+                    transparent 0px,
+                    transparent 2px,
+                    rgba(0, 0, 0, 0.2) 2px,
+                    rgba(0, 0, 0, 0.2) 4px);
+        }
+
+        /* Contact Info */
+        .contact-info {
+            display: grid;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .info-item {
+            background: rgba(0, 0, 0, 0.6);
+            border: 2px solid #3a4a3a;
+            padding: 15px 20px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .info-label {
+            color: #6dd16d;
+            font-weight: bold;
+            text-transform: uppercase;
+            min-width: 120px;
+            font-size: 0.95em;
+        }
+
+        .info-value {
+            color: #9dd19d;
+            font-size: 1.05em;
+        }
+
+        .info-value a {
+            color: inherit;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .info-value a:hover {
+            color: #baf3ba;
+        }
+
+        /* Timeline pour expérience et formation */
+        .timeline {
+            display: grid;
+            gap: 25px;
+            margin-top: 20px;
+            position: relative;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 20px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(180deg, #2a4a2a 0%, #1a3a1a 100%);
+        }
+
+        .timeline-item {
+            background: rgba(0, 0, 0, 0.6);
+            border: 2px solid #3a4a3a;
+            padding: 20px;
+            padding-left: 60px;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .timeline-item::before {
+            content: '▲';
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6dd16d;
+            font-size: 1.5em;
+            width: 25px;
+            height: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .timeline-item:hover {
+            border-color: #4a6a4a;
+            background: rgba(0, 0, 0, 0.8);
+            transform: translateX(5px);
+        }
+
+        .timeline-date {
+            color: #6dd16d;
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .timeline-content h3 {
+            color: #8fbc8f;
+            font-size: 1.4em;
+            margin-top: 0;
+            margin-bottom: 5px;
+        }
+
+        .timeline-company {
+            color: #6dd16d;
+            font-size: 1.05em;
+            margin-bottom: 12px;
+            font-style: italic;
+        }
+
+        .timeline-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .tag {
+            background: linear-gradient(180deg, #2a4a2a 0%, #1a3a1a 100%);
+            border: 1px solid #4a6a4a;
+            color: #6dd16d;
+            padding: 5px 12px;
+            font-size: 0.85em;
+            text-transform: uppercase;
+        }
+
+        /* Certifications */
+        .certifications {
+            display: grid;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .cert-item {
+            background: rgba(0, 0, 0, 0.6);
+            border: 2px solid #3a4a3a;
+            border-left: 4px solid #6dd16d;
+            padding: 15px 20px;
+            transition: all 0.3s;
+        }
+
+        .cert-item:hover {
+            border-left-width: 8px;
+            transform: translateX(4px);
+        }
+
+        .cert-name {
+            color: #6dd16d;
+            font-size: 1.1em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .cert-org {
+            color: #8fbc8f;
+            font-size: 0.95em;
+        }
+
+        footer {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            border-top: 2px solid #3a3a3a;
+            padding: 25px 20px 15px 20px;
+            text-align: center;
+            color: #6dd16d;
+            font-family: 'Courier New', monospace;
+            box-shadow: inset 0 5px 10px rgba(0, 0, 0, 0.3);
+            margin-top: 20px;
+        }
+
+        .footer-container p {
+            margin: 5px 0;
+        }
+
+        .footer-links {
+            margin: 10px 0;
+        }
+
+        .footer-links a {
+            color: #6dd16d;
+            text-decoration: none;
+            margin: 0 5px;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #baf3ba;
+        }
+
+        .footer-note {
+            font-size: 0.85em;
+            color: #8fbc8f;
+            margin-top: 5px;
+        }
+
+        * {
+            cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%236dd16d' d='M12 2L2 22h20L12 2z'/%3E%3Cline x1='12' y1='2' x2='12' y2='22' stroke='%236dd16d' stroke-width='2'/%3E%3Cline x1='2' y1='22' x2='22' y2='22' stroke='%236dd16d' stroke-width='2'/%3E%3C/svg%3E") 12 12, crosshair;
+        }
+
+        button,
+        .nav-btn,
+        .project-card {
+            cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Crect fill='%236dd16d' x='0' y='0' width='24' height='24' opacity='0.3'/%3E%3Cpath fill='%236dd16d' d='M12 2L2 22h20L12 2z'/%3E%3C/svg%3E") 12 12, pointer;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .timeline::before {
+                left: 10px;
+            }
+
+            .timeline-item {
+                padding-left: 45px;
+            }
+
+            .timeline-item::before {
+                left: 0;
+                font-size: 1.2em;
+            }
+
+            nav {
+                justify-content: center;
+            }
+
+            .nav-btn {
+                padding: 10px 15px;
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>► PORTFOLIO - MAXIME ROMBOUTS ◄</h1>
+            <p class="subtitle">"Nous avons besoin d'hommes qui savent rêver à des choses inédites." — John F. Kennedy
+            </p>
+            <p class="subtitle">— En recherche d'emploi —</p>
+        </header>
+
+        <nav>
+            <button class="nav-btn active" data-section="apropos">À Propos</button>
+            <button class="nav-btn" data-section="experience">Expérience</button>
+            <button class="nav-btn" data-section="formation">Formation</button>
+            <button class="nav-btn" data-section="competences">Compétences</button>
+            <button class="nav-btn" data-section="contact">Contact</button>
+        </nav>
+
+        <section id="apropos" class="active">
+            <h2>► À PROPOS</h2>
+            <p>
+                Bonjour, je m'appelle Maxime Rombouts et j'ai 21 ans. Originaire de la belle ville de Tourcoing, je
+                réside actuellement dans une campagne tranquille de Wattrelos, près de la frontière belge. Après avoir
+                passé deux années enrichissantes à MyDigitalSchool, où j'ai approfondi mes compétences en développement
+                web, je suis désormais en route vers de nouvelles opportunités professionnelles.
+            </p>
+            <p>
+                Niveau BTS SIO, option SISR (Solutions d'Infrastructure, Systèmes et Réseaux). Je suis à la recherche
+                d'un emploi dans la maintenance et le support informatique, ainsi que l'assistance aux utilisateurs.
+                Ma passion pour la programmation, commencée avec l'Arduino, m'a confirmé que l'informatique est le
+                domaine dans lequel je souhaite évoluer.
+            </p>
+            <p>
+                En dehors de mes compétences techniques, je suis une personne curieuse, toujours avide d'apprendre et
+                de relever de nouveaux défis. J'aime travailler en équipe et je suis convaincu que la collaboration
+                est la clé du succès dans le domaine de l'informatique.
+                Si vous cherchez un jeune professionnel motivé, passionné et prêt à contribuer à votre équipe, n'hésitez
+                pas à me contacter.
+            </p>
+        </section>
+
+
+        <section id="experience">
+            <h2>► EXPÉRIENCE PROFESSIONNELLE</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-date">mai 2025 - juin 2025 · 6 semaines</div>
+                    <div class="timeline-content">
+                        <h3> Technicien Exploitation Supervision</h3>
+                        <div class="timeline-company">IDKIDS</div>
+                        <p>
+                            Membre du service Exploitation Supervision, utilisation de EM23 avec du OPCON. Durée du
+                            stage : 6 semaines
+                        </p>
+                        <div class="timeline-tags">
+                            <span class="tag">OpCon</span>
+                            <span class="tag">EM23</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">avr. 2024 - mai 2024 · 2 mois</div>
+                    <div class="timeline-content">
+                        <h3>Développeur Full-Stack</h3>
+                        <div class="timeline-company">Kiabi</div>
+                        <p>
+                            Membre du service Web IT et de l'équipe/Squad Catalogue. J'ai pu utiliser les langages
+                            suivants : HTML, CSS, REACT.JS.
+                        </p>
+                        <div class="timeline-tags">
+                            <span class="tag">HTML</span>
+                            <span class="tag">CSS</span>
+                            <span class="tag">REACTJS</span>
+                            <span class="tag">JS</span>
+                            <span class="tag">AGILE</span>
+                            <span class="tag">SCRUM</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">FIN 2022 - DEBUT 2023· 1 mois</div>
+                    <div class="timeline-content">
+                        <h3>Technicien de proximité</h3>
+                        <div class="timeline-company">Kiabi</div>
+                        <p>
+                            Membre du DSI Kiabi, j'ai pris en charge la maintenance informatique, ainsi que la gestion
+                            des installations et réparations des équipements au siège.
+                        </p>
+                        <div class="timeline-tags">
+                            <span class="tag">MATÉRIEL INFORMATIQUE</span>
+                            <span class="tag">MAINTENANCE</span>
+                            <span class="tag">RÉPARATION</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2022 · 1 mois</div>
+                    <div class="timeline-content">
+                        <h3>Technicien maintenance</h3>
+                        <div class="timeline-company">Auchan</div>
+                        <p>
+                            Membre du service informatique et support chez Auchan, j'ai assemblé et installé des postes
+                            informatiques dans les bureaux de l'entreprise.
+                        </p>
+                        <div class="timeline-tags">
+                            <span class="tag">MATÉRIEL INFORMATIQUE</span>
+                            <span class="tag">DÉPANNAGE DE MATÉRIEL INFORMATIQUE</span>
+                            <span class="tag">MAINTENANCE ET RÉPARATION</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2022 · 1 mois</div>
+                    <div class="timeline-content">
+                        <h3>Technicien maintenance</h3>
+                        <div class="timeline-company">Auchan Retail</div>
+                        <p>
+                            Membre de l'équipe informatique et support, j'ai assuré la maintenance et la réparation
+                            des équipements informatiques dans les bureaux de l'entreprise.
+                        </p>
+                        <div class="timeline-tags">
+                            <span class="tag">MATÉRIEL INFORMATIQUE</span>
+                            <span class="tag">ADMINISTRATION RÉSEAU</span>
+                            <span class="tag">MAINTENANCE ET RÉPARATION</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2021 · 1 mois</div>
+                    <div class="timeline-content">
+                        <h3>Technicien maintenance</h3>
+                        <div class="timeline-company">Lycées Saint Vincent de Paul / Notre Dame du Sacré Cœur</div>
+                        <p>
+                            Membre de l'équipe informatique, j'ai assuré la maintenance et la réparation des équipements
+                            informatiques dans les deux lycées.
+                        </p>
+                        <div class="timeline-tags">
+                            <span class="tag">MATÉRIEL INFORMATIQUE</span>
+                            <span class="tag">ADMINISTRATION RÉSEAU</span>
+                            <span class="tag">TÉLÉPHONIE</span>
+                            <span class="tag">MAINTENANCE ET RÉPARATION</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2021 · 1 mois</div>
+                    <div class="timeline-content">
+                        <h3>Technicien maintenance</h3>
+                        <div class="timeline-company">Mairie de Wattrelos</div>
+                        <p>
+                            Membre de l'équipe informatique, de la mairie de Wattrelos, j'ai assuré la maintenance et la
+                            réparation
+                            des équipements informatiques dans les bureaux de la mairie.
+                        </p>
+                        <div class="timeline-tags">
+                            <span class="tag">MATÉRIEL INFORMATIQUE</span>
+                            <span class="tag">ADMINISTRATION RÉSEAU</span>
+                            <span class="tag">MAINTENANCE ET RÉPARATION</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2019 · 1 mois</div>
+                    <div class="timeline-content">
+                        <h3>Technicien maintenance</h3>
+                        <div class="timeline-company">Mairie de Roubaix</div>
+                        <p>
+                            Membre de l'équipe informatique, de la mairie de Roubaix, j'ai assuré la maintenance et la
+                            réparation
+                            des équipements informatiques dans les bureaux de la mairie.
+                        </p>
+                        <div class="timeline-tags">
+                            <span class="tag">MATÉRIEL INFORMATIQUE</span>
+                            <span class="tag">ADMINISTRATION RÉSEAU</span>
+                            <span class="tag">MAINTENANCE ET RÉPARATION</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="formation">
+            <h2>► FORMATION</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-date">2024 - 2025</div>
+                    <div class="timeline-content">
+                        <h3>BTS SIO - Option SISR</h3>
+                        <div class="timeline-company">Saint Rémi - Roubaix</div>
+                        <p>
+                            Formation en BTS SIO, option SISR (Solutions d'Infrastructure, Systèmes et Réseaux).
+                            Apprentissage approfondi des réseaux, systèmes et infrastructures informatiques.
+                        </p>
+                        <div class="timeline-tags">
+                            <span class="tag">ADMINISTRATION RÉSEAU</span>
+                            <span class="tag">CYBERSÉCURITÉ</span>
+                            <span class="tag">MYSQL</span>
+                            <span class="tag">JAVA</span>
+                            <span class="tag">DÉPANNAGE DE MATÉRIEL INFORMATIQUE</span>
+                            <span class="tag">DÉPANNAGE RÉSEAU</span>
+                            <span class="tag">CISCO</span>
+                            <span class="tag">RÉSEAUTAGE</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2022 - 2024</div>
+                    <div class="timeline-content">
+                        <h3>Bachelor web et multimédia</h3>
+                        <div class="timeline-company">MyDigitalSchool</div>
+                        <p>
+                            Formation universitaire en informatique. Apprentissage des bases
+                            de la programmation, algorithmique, bases de données et réseaux.
+                        </p>
+                        <div class="timeline-tags">
+                            <span class="tag">JAVASCRIPT</span>
+                            <span class="tag">HTML5</span>
+                            <span class="tag">CSS</span>
+                            <span class="tag">VUE.JS</span>
+                            <span class="tag">MYSQL</span>
+                            <span class="tag">PHP</span>
+                            <span class="tag">WAMPSERVER</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2019 - 2022</div>
+                    <div class="timeline-content">
+                        <h3>Bac. professionnel SN (Système Numérique) - Option C</h3>
+                        <div class="timeline-company">Lycee Privé Léonard De Vinci</div>
+                        <p>
+                            Baccalauréat professionnel en Système Numérique, option C RISC (Réseaux Informatiques et
+                            Systèmes Communicants). Apprentissage des bases du réseau, de la programmation et de la
+                            maintenance informatique.
+                        </p>
+                        <div class="timeline-tags">
+                            <span class="tag">MATÉRIEL INFORMATIQUE</span>
+                            <span class="tag">RÉSEAU</span>
+                            <span class="tag">PROGRAMMATION</span>
+                            <span class="tag">MAINTENANCE ET RÉPARATION</span>
+                            <span class="tag">CISCO</span>
+                            <span class="tag">ADMINISTRATION RÉSEAU</span>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 40px;">► Certifications & Badges</h3>
+            <div class="certifications">
+                <div class="cert-item">
+                    <div class="cert-name">
+                        Badge - Gérer Active Directory Domain Services à l'aide de cmdlets PowerShell
+                    </div>
+                    <div class="cert-org">Microsoft Learn - mars 2025</div>
+                </div>
+                <div class="cert-item">
+                    <div class="cert-name">
+                        Badge - Gérer les paramètres de Windows Server avec les applets de commande PowerShell
+                    </div>
+                    <div class="cert-org">Microsoft Learn - mars 2025</div>
+                </div>
+                <div class="cert-item">
+                    <div class="cert-name">
+                        Badge - Gérer les paramètres de service réseau pour les appareils Windows avec les applets de
+                        commande PowerShell
+                    </div>
+                    <div class="cert-org">Microsoft Learn - mars 2025</div>
+                </div>
+                <div class="cert-item">
+                    <div class="cert-name">
+                        Badge - Gérer les paramètres d'un ordinateur Windows local avec les applets de commande
+                        PowerShell
+                    </div>
+                    <div class="cert-org">Microsoft Learn - mars 2025</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="competences">
+            <h2>► COMPÉTENCES</h2>
+            <div class="skills-list">
+                <div class="skill-item">
+                    <div class="skill-name">Support Informatique</div>
+                    <div class="skill-bar">
+                        <div class="skill-fill" data-level="100"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-name">Dépannage de matériel informatique</div>
+                    <div class="skill-bar">
+                        <div class="skill-fill" data-level="100"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-name">HTML5, CSS et JAVASCRIPT</div>
+                    <div class="skill-bar">
+                        <div class="skill-fill" data-level="75"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-name">MySQL et PHP</div>
+                    <div class="skill-bar">
+                        <div class="skill-fill" data-level="60"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-name">Maintenance et réparation Informatique</div>
+                    <div class="skill-bar">
+                        <div class="skill-fill" data-level="90"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="competences">
+            <h2>► LANGUE(S)</h2>
+            <div class="skills-list">
+                <div class="skill-item">
+                    <div class="skill-name">ANGLAIS - ÉCRIT ET LECTURE</div>
+                    <div class="skill-bar">
+                        <div class="skill-fill" data-level="70"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-name">ANGLAIS - ORAL</div>
+                    <div class="skill-bar">
+                        <div class="skill-fill" data-level="30"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-name">FRANCAIS - LANGUE MATERNELLE</div>
+                    <div class="skill-bar">
+                        <div class="skill-fill" data-level="100"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact">
+            <h2>► CONTACT</h2>
+            <div class="contact-info">
+                <div class="info-item">
+                    <div class="info-label">Email:</div>
+                    <div class="info-value">
+                        <a href="mailto:mromboutsldv@gmail.com" target="_blank">mromboutsldv@gmail.com</a>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">LinkedIn:</div>
+                    <div class="info-value">
+                        <a href="https://www.linkedin.com/in/maxime-rombouts"
+                            target="_blank">linkedin.com/in/maxime-rombouts</a>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">GitHub:</div>
+                    <div class="info-value">
+                        <a href="https://github.com/Maxime-Rombouts" target="_blank">github.com/Maxime-Rombouts</a>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Localisation:</div>
+                    <div class="info-value">
+                        <a href="https://www.google.com/maps/place/Wattrelos,+France" target="_blank">Wattrelos,
+                            France</a>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <footer>
+            <div class="footer-container">
+                <p>© <span id="year"></span> Maxime Rombouts | Tous droits réservés</p>
+                <div class="footer-links">
+                    <a href="mailto:mromboutsldv@gmail.com" target="_blank">Email</a> |
+                    <a href="https://www.linkedin.com/in/maxime-rombouts" target="_blank">LinkedIn</a> |
+                    <a href="https://github.com/Maxime-Rombouts" target="_blank">GitHub</a>
+                </div>
+                <p class="footer-note">Créé avec ❤ par Maxime Rombouts</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        const navBtns = document.querySelectorAll('.nav-btn');
+        const sections = document.querySelectorAll('section');
+
+        navBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const target = btn.getAttribute('data-section');
+
+                navBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                sections.forEach(section => {
+                    section.classList.remove('active');
+                    if (section.id === target) {
+                        section.classList.add('active');
+
+                        if (target === 'competences') {
+                            animateSkills();
+                        }
+                    }
+                });
+            });
+        });
+
+        function animateSkills() {
+            const skillFills = document.querySelectorAll('.skill-fill');
+            skillFills.forEach(fill => {
+                const level = fill.getAttribute('data-level');
+                setTimeout(() => {
+                    fill.style.width = level + '%';
+                }, 100);
+            });
+        }
+
+        window.addEventListener('load', () => {
+            const skillFills = document.querySelectorAll('.skill-fill');
+            skillFills.forEach(fill => {
+                fill.style.width = '0%';
+            });
+        });
+
+        // Effet de glitch aléatoire sur le titre
+        function glitchEffect() {
+            const h1 = document.querySelector('h1');
+            const originalText = h1.textContent;
+            const glitchChars = '█▓▒░▀▄';
+
+            if (Math.random() > 0.97) {
+                let glitched = '';
+                for (let i = 0; i < originalText.length; i++) {
+                    glitched += Math.random() > 0.7 ? originalText[i] : glitchChars[Math.floor(Math.random() * glitchChars.length)];
+                }
+                h1.textContent = glitched;
+
+                setTimeout(() => {
+                    h1.textContent = originalText;
+                }, 50);
+            }
+        }
+
+        setInterval(glitchEffect, 3000);
+
+        // Effet de clignotement aléatoire
+        setInterval(() => {
+            if (Math.random() > 0.95) {
+                document.body.style.opacity = '0.8';
+                setTimeout(() => {
+                    document.body.style.opacity = '1';
+                }, 50);
+            }
+        }, 2000);
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+    </script>
+</body>
+
+</html>
