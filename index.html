@@ -1193,10 +1193,11 @@
                         <label for="reason">Raison du contact *</label>
                         <select id="reason" name="reason" required onchange="toggleCustomReason()">
                             <option value="">-- Sélectionnez une raison --</option>
-                            <option value="Opportunité d'emploi">Opportunité d'emploi</option>
-                            <option value="Collaboration">Collaboration</option>
-                            <option value="Question technique">Question technique</option>
-                            <option value="Demande de stage">Demande de stage</option>
+                            <option value="Proposition d'emploi">Proposition d'emploi</option>
+                            <option value="Entretien d'embauche">Entretien d'embauche</option>
+                            <option value="Demande d'informations">Demande d'informations</option>
+                            <option value="Proposition de collaboration">Proposition de collaboration</option>
+                            <option value="Networking professionnel">Networking professionnel</option>
                             <option value="Autre">Autre (précisez)</option>
                         </select>
                     </div>
@@ -1371,13 +1372,13 @@
                 popup.classList.add('show');
             }, 10);
 
-            // Cache et supprime la pop-up après 5 secondes
+            // Cache et supprime la pop-up après 3 secondes
             setTimeout(() => {
                 popup.classList.remove('show');
                 setTimeout(() => {
                     document.body.removeChild(popup);
                 }, 300);
-            }, 5000);
+            }, 3000);
         }
     </script>
 </body>
